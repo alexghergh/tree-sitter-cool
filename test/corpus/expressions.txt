@@ -1,0 +1,749 @@
+==================
+Assignment expression
+==================
+
+class Main inherits IO {
+
+    a : Int;
+    b : Int;
+
+    main() : Int {
+        a <- 3
+    };
+
+    method() : Int {
+        b <- a <- 4
+    };
+
+};
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier)
+        inherit_type: (builtin_type)
+        class_feature: (attribute_definition
+            name: (attribute_identifier)
+            type: (builtin_type))
+        class_feature: (attribute_definition
+            name: (attribute_identifier)
+            type: (builtin_type))
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (assignment_expression
+                lhs: (variable_identifier)
+                rhs: (integer_literal)))
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (assignment_expression
+                lhs: (variable_identifier)
+                rhs: (assignment_expression
+                    lhs: (variable_identifier)
+                    rhs: (integer_literal))))))
+
+==================
+Dispatch expression
+==================
+
+class A {
+
+    method() : Int {
+        5
+    };
+};
+
+class Main inherits A {
+
+    main() : Int {
+        {
+            new Main@A.method();
+            new Main@Main.method();
+            new A@A.method();
+        }
+    };
+
+    method() : Int {
+        4
+    };
+
+};
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier)
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (integer_literal)))
+    (class_definition
+        class_type: (type_identifier)
+        inherit_type: (type_identifier)
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (expr_block_expression
+                expr: (dispatch_expression
+                    dispatch_expr: (newtype_expression
+                        type: (type_identifier))
+                    type: (type_identifier)
+                    method_id: (method_identifier)
+                    args_list: (arguments_list))
+                expr: (dispatch_expression
+                    dispatch_expr: (newtype_expression
+                        type: (type_identifier))
+                    type: (type_identifier)
+                    method_id: (method_identifier)
+                    args_list: (arguments_list))
+                expr: (dispatch_expression
+                    dispatch_expr: (newtype_expression
+                        type: (type_identifier))
+                    type: (type_identifier)
+                    method_id: (method_identifier)
+                    args_list: (arguments_list))))
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (integer_literal))))
+
+==================
+method call expression
+==================
+
+class Main {
+
+    main() : Int {
+        method(1337, new IO)
+    };
+
+    method(a : Int, io : IO) : Int {
+        0
+    };
+
+};
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier)
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (method_call_expression
+                method_id: (method_identifier)
+                args_list: (arguments_list
+                    arg: (integer_literal)
+                    arg: (newtype_expression
+                        type: (builtin_type)))))
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list
+                (parameter
+                    name: (parameter_identifier)
+                    type: (builtin_type))
+                (parameter
+                    name: (parameter_identifier)
+                    type: (builtin_type)))
+            return_type: (builtin_type)
+            body: (integer_literal))))
+
+==================
+If expression
+==================
+
+class Main {
+
+    main() : Int {
+        if 5 < 3 then
+            42
+        else
+            1337
+        fi
+    };
+
+};
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier)
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (if_expression
+                cond: (binary_expression
+                    lhs: (integer_literal)
+                    rhs: (integer_literal))
+                then: (integer_literal)
+                else: (integer_literal)))))
+
+==================
+While expression
+==================
+
+class Main {
+
+    n : Int <- 0;
+
+    main() : Object {
+        while n < 4 loop
+            n <- n + 1
+        pool
+    };
+
+};
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier)
+        class_feature: (attribute_definition
+            name: (attribute_identifier)
+            type: (builtin_type)
+            value: (integer_literal))
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (while_expression
+                cond: (binary_expression
+                    lhs: (variable_identifier)
+                    rhs: (integer_literal))
+                body: (assignment_expression
+                    lhs: (variable_identifier)
+                    rhs: (binary_expression
+                        lhs: (variable_identifier)
+                        rhs: (integer_literal)))))))
+
+==================
+Expression block expression
+==================
+
+class Main inherits IO {
+
+    n : Int <- 0;
+
+    main() : IO {
+        {
+            n <- 42;
+            out_string("The number is: ");
+            out_int(n);
+        }
+    };
+
+};
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier)
+        inherit_type: (builtin_type)
+        class_feature: (attribute_definition
+            name: (attribute_identifier)
+            type: (builtin_type)
+            value: (integer_literal))
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (expr_block_expression
+                expr: (assignment_expression
+                    lhs: (variable_identifier)
+                    rhs: (integer_literal))
+                expr: (method_call_expression
+                    method_id: (method_identifier)
+                    args_list: (arguments_list
+                        arg: (string_literal)))
+                expr: (method_call_expression
+                    method_id: (method_identifier)
+                    args_list: (arguments_list
+                        arg: (variable_identifier)))))))
+
+==================
+Let expression
+==================
+
+class Main inherits IO {
+
+    main() : IO {
+        let n : Int <- 42, a : String, b : Bool
+            in out_int(n)
+    };
+
+};
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier)
+        inherit_type: (builtin_type)
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (let_expression
+                initialization: (variable_definition_list
+                    var_def: (let_variable_definition
+                        id: (variable_identifier)
+                        type: (builtin_type)
+                        value: (integer_literal))
+                    var_def: (let_variable_definition
+                        id: (variable_identifier)
+                        type: (builtin_type))
+                    var_def: (let_variable_definition
+                        id: (variable_identifier)
+                        type: (builtin_type)))
+                body: (method_call_expression
+                    method_id: (method_identifier)
+                    args_list: (arguments_list
+                        arg: (variable_identifier)))))))
+
+==================
+Case expression
+==================
+
+class A {
+};
+
+class B inherits A {
+};
+
+class C inherits B {
+};
+
+class Main inherits IO {
+
+    n : A <- new B;
+
+    main() : IO {
+        case n of
+            a : A => out_string("A");
+            b : B => out_string("B");
+            c : C => out_string("C");
+        esac
+    };
+
+};
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier))
+    (class_definition
+        class_type: (type_identifier)
+        inherit_type: (type_identifier))
+    (class_definition
+        class_type: (type_identifier)
+        inherit_type: (type_identifier))
+    (class_definition
+        class_type: (type_identifier)
+        inherit_type: (builtin_type)
+        class_feature: (attribute_definition
+            name: (attribute_identifier)
+            type: (type_identifier)
+            value: (newtype_expression
+                type: (type_identifier)))
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (case_expression
+                cond: (variable_identifier)
+                branch_list: (case_branch_list
+                    branch: (case_branch
+                        id: (variable_identifier)
+                        type: (type_identifier)
+                        expr: (method_call_expression
+                            method_id: (method_identifier)
+                            args_list: (arguments_list
+                                arg: (string_literal))))
+                    branch: (case_branch
+                        id: (variable_identifier)
+                        type: (type_identifier)
+                        expr: (method_call_expression
+                            method_id: (method_identifier)
+                            args_list: (arguments_list
+                                arg: (string_literal))))
+                    branch: (case_branch
+                        id: (variable_identifier)
+                        type: (type_identifier)
+                        expr: (method_call_expression
+                            method_id: (method_identifier)
+                            args_list: (arguments_list
+                                arg: (string_literal)))))))))
+
+==================
+New type expression
+==================
+
+class A {
+};
+
+class Main {
+
+    n : A <- new A;
+
+    main() : Int {
+        42
+    };
+
+};
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier))
+    (class_definition
+        class_type: (type_identifier)
+        class_feature: (attribute_definition
+            name: (attribute_identifier)
+            type: (type_identifier)
+            value: (newtype_expression
+                type: (type_identifier)))
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (integer_literal))))
+
+==================
+Is void expression
+==================
+
+class A {
+};
+
+class Main {
+
+    n : A;
+
+    main() : Int {
+        if isvoid n then
+            42
+        else
+            0
+        fi
+    };
+
+};
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier))
+    (class_definition
+        class_type: (type_identifier)
+        class_feature: (attribute_definition
+            name: (attribute_identifier)
+            type: (type_identifier))
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (if_expression
+                cond: (isvoid_expression
+                    expr: (variable_identifier))
+                then: (integer_literal)
+                else: (integer_literal)))))
+
+==================
+Binary expressions
+==================
+
+class Main {
+
+    n : Int <- 42;
+    b : Bool;
+
+    main() : Int {
+        {
+            n <- n + n;
+            n <- n - n;
+            n <- n * n;
+            n <- n / 2;
+            b <- n < n;
+            b <- n <= n;
+            b <- n = n;
+            0;
+        }
+    };
+
+};
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier)
+        class_feature: (attribute_definition
+            name: (attribute_identifier)
+            type: (builtin_type)
+            value: (integer_literal))
+        class_feature: (attribute_definition
+            name: (attribute_identifier)
+            type: (builtin_type))
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (expr_block_expression
+                expr: (assignment_expression
+                    lhs: (variable_identifier)
+                    rhs: (binary_expression
+                        lhs: (variable_identifier)
+                        rhs: (variable_identifier)))
+                expr: (assignment_expression
+                    lhs: (variable_identifier)
+                    rhs: (binary_expression
+                        lhs: (variable_identifier)
+                        rhs: (variable_identifier)))
+                expr: (assignment_expression
+                    lhs: (variable_identifier)
+                    rhs: (binary_expression
+                        lhs: (variable_identifier)
+                        rhs: (variable_identifier)))
+                expr: (assignment_expression
+                    lhs: (variable_identifier)
+                    rhs: (binary_expression
+                        lhs: (variable_identifier)
+                        rhs: (integer_literal)))
+                expr: (assignment_expression
+                    lhs: (variable_identifier)
+                    rhs: (binary_expression
+                        lhs: (variable_identifier)
+                        rhs: (variable_identifier)))
+                expr: (assignment_expression
+                    lhs: (variable_identifier)
+                    rhs: (binary_expression
+                        lhs: (variable_identifier)
+                        rhs: (variable_identifier)))
+                expr: (assignment_expression
+                    lhs: (variable_identifier)
+                    rhs: (binary_expression
+                        lhs: (variable_identifier)
+                        rhs: (variable_identifier)))
+                expr: (integer_literal)))))
+
+==================
+Integer complement expression
+==================
+
+class Main inherits IO {
+
+    n : Int <- 5;
+
+    main() : IO {
+        out_int(~n)
+    };
+
+};
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier)
+        inherit_type: (builtin_type)
+        class_feature: (attribute_definition
+            name: (attribute_identifier)
+            type: (builtin_type)
+            value: (integer_literal))
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (method_call_expression
+                method_id: (method_identifier)
+                args_list: (arguments_list
+                    arg: (integer_complement
+                        expr: (variable_identifier)))))))
+
+==================
+Boolean complement expression
+==================
+
+class Main {
+
+    n : Bool <- true;
+
+    main() : Bool {
+        not n
+    };
+
+};
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier)
+        class_feature: (attribute_definition
+            name: (attribute_identifier)
+            type: (builtin_type)
+            value: (true))
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (boolean_complement
+                expr: (variable_identifier)))))
+
+==================
+Parentheses expression
+==================
+
+class A {
+    method() : Int {
+        1
+    };
+};
+
+class B inherits A {
+    method() : Int {
+        2
+    };
+};
+
+class Main inherits IO {
+
+    main() : IO {
+        out_int(
+            (
+                if in_int() = 0 then new A else new B fi
+            ).method()
+        )
+    };
+
+};
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier)
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (integer_literal)))
+    (class_definition
+        class_type: (type_identifier)
+        inherit_type: (type_identifier)
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (integer_literal)))
+    (class_definition
+        class_type: (type_identifier)
+        inherit_type: (builtin_type)
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (method_call_expression
+                method_id: (method_identifier)
+                args_list: (arguments_list
+                    arg: (dispatch_expression
+                        dispatch_expr: (parentheses_expression
+                            expr: (if_expression
+                                cond: (binary_expression
+                                    lhs: (method_call_expression
+                                        method_id: (method_identifier)
+                                        args_list: (arguments_list))
+                                    rhs: (integer_literal))
+                                then: (newtype_expression
+                                    type: (type_identifier))
+                                else: (newtype_expression
+                                    type: (type_identifier))))
+                        method_id: (method_identifier)
+                        args_list: (arguments_list)))))))
+==================
+Parentheses expression
+==================
+
+class A {
+    method() : Int {
+        1
+    };
+};
+
+class B inherits A {
+    method() : Int {
+        2
+    };
+};
+
+class Main inherits IO {
+
+    main() : IO {
+        out_int(
+            (
+                if in_int() = 0 then new A else new B fi
+            ).method()
+        )
+    };
+
+};
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier)
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (integer_literal)))
+    (class_definition
+        class_type: (type_identifier)
+        inherit_type: (type_identifier)
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (integer_literal)))
+    (class_definition
+        class_type: (type_identifier)
+        inherit_type: (builtin_type)
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (method_call_expression
+                method_id: (method_identifier)
+                args_list: (arguments_list
+                    arg: (dispatch_expression
+                        dispatch_expr: (parentheses_expression
+                            expr: (if_expression
+                                cond: (binary_expression
+                                    lhs: (method_call_expression
+                                        method_id: (method_identifier)
+                                        args_list: (arguments_list))
+                                    rhs: (integer_literal))
+                                then: (newtype_expression
+                                    type: (type_identifier))
+                                else: (newtype_expression
+                                    type: (type_identifier))))
+                        method_id: (method_identifier)
+                        args_list: (arguments_list)))))))

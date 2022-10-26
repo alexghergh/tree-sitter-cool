@@ -1,0 +1,70 @@
+==================
+Integer literals
+==================
+
+class Main {
+
+    main() : Int {
+        {
+            12;
+            0;
+            007;
+        }
+    };
+
+};
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier)
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (expr_block_expression
+                expr: (integer_literal)
+                expr: (integer_literal)
+                expr: (integer_literal)))))
+
+==================
+String literals
+==================
+
+class Main {
+
+    main() : String {
+        {
+            "normal string \t \b \f";
+            "This \
+            is OK";
+            -- "This is not
+            -- OK"
+            "another \" \ \\ \c string";
+            "string \t yes ";
+            " string ";
+            " string \"";
+        }
+    };
+
+};
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier)
+        class_feature: (method_definition
+        name: (method_identifier)
+        param_list: (parameter_list)
+        return_type: (builtin_type)
+        body: (expr_block_expression
+            expr: (string_literal)
+            expr: (string_literal)
+            (line_comment)
+            (line_comment)
+            expr: (string_literal)
+            expr: (string_literal)
+            expr: (string_literal)
+            expr: (string_literal)))))

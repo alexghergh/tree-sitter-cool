@@ -1,0 +1,132 @@
+==================
+Class definitions
+==================
+
+class Main inherits IO {
+
+};
+
+class A {
+} ;
+
+class    B
+
+inherits
+
+A
+
+{
+}
+;
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier)
+        inherit_type: (builtin_type))
+    (class_definition
+        class_type: (type_identifier))
+    (class_definition
+        class_type: (type_identifier)
+        inherit_type: (type_identifier)))
+
+==================
+method definitions
+==================
+
+class Main inherits IO {
+
+    main() : IO {
+        out_string("Hello world!")
+    };
+
+    method(a : Int, b : Main) : Bool {
+        true
+    } ;
+
+};
+
+class A {
+    meme   (  )   :   Bool {
+        false
+    }       ;
+} ;
+
+class    B
+
+inherits
+
+A
+
+{
+
+}
+;
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier)
+        inherit_type: (builtin_type)
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (method_call_expression
+                method_id: (method_identifier)
+                args_list: (arguments_list
+                    arg: (string_literal))))
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list
+                (parameter
+                    name: (parameter_identifier)
+                    type: (builtin_type))
+                (parameter
+                    name: (parameter_identifier)
+                    type: (type_identifier)))
+            return_type: (builtin_type)
+            body: (true)))
+    (class_definition
+        class_type: (type_identifier)
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (false)))
+    (class_definition
+        class_type: (type_identifier)
+        inherit_type: (type_identifier)))
+
+==================
+attribute definitions
+==================
+
+class Main inherits IO {
+
+    a : Int;
+
+    b : A;
+
+    c    :   String  <-    "string";
+
+};
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier)
+        inherit_type: (builtin_type)
+        class_feature: (attribute_definition
+            name: (attribute_identifier)
+            type: (builtin_type))
+        class_feature: (attribute_definition
+            name: (attribute_identifier)
+            type: (type_identifier))
+        class_feature: (attribute_definition
+            name: (attribute_identifier)
+            type: (builtin_type)
+            value: (string_literal))))

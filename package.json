@@ -1,0 +1,17 @@
+{
+  "name": "tree-sitter-cool",
+  "version": "1.0.0",
+  "description": "Tree-sitter parser for the programming language COOL (Classroom Object-Oriented Language).",
+  "main": "bindings/node",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alexandru Gherghescu (@alexghergh)",
+  "license": "ISC",
+  "dependencies": {
+    "nan": "^2.17.0"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.20.7"
+  }
+}

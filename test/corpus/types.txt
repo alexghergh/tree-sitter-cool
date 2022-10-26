@@ -1,0 +1,77 @@
+========================================
+Builtin types
+========================================
+
+class Main {
+
+    object : Object;
+    io : IO;
+    integer : Int;
+    string : String;
+    bool : Bool;
+
+    main() : Int {
+        0
+    };
+
+};
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier)
+        class_feature: (attribute_definition
+            name: (attribute_identifier)
+            type: (builtin_type))
+        class_feature: (attribute_definition
+            name: (attribute_identifier)
+            type: (builtin_type))
+        class_feature: (attribute_definition
+            name: (attribute_identifier)
+            type: (builtin_type))
+        class_feature: (attribute_definition
+            name: (attribute_identifier)
+            type: (builtin_type))
+        class_feature: (attribute_definition
+            name: (attribute_identifier)
+            type: (builtin_type))
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (builtin_type)
+            body: (integer_literal))))
+
+========================================
+Other types
+========================================
+
+class B {
+};
+
+class A {
+
+    attribute : B;
+
+    method() : B {
+        new B
+    };
+
+};
+
+---
+
+(source_file
+    (class_definition
+        class_type: (type_identifier))
+    (class_definition
+        class_type: (type_identifier)
+        class_feature: (attribute_definition
+            name: (attribute_identifier)
+            type: (type_identifier))
+        class_feature: (method_definition
+            name: (method_identifier)
+            param_list: (parameter_list)
+            return_type: (type_identifier)
+            body: (newtype_expression
+                type: (type_identifier)))))
