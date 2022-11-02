@@ -10,10 +10,6 @@ const PREC = {
     OBJ_ACCS: 9,        // .
 };
 
-// TODO lowercase/uppercase keywords (seems like tree-sitter
-// doesn't support that for now); the issue arises with the
-// 'keyword' variable it seems, as it doesn't recognize string
-// keywords anymore when having a regex like '/[iI][fF]/'
 module.exports = grammar({
     name: 'cool',
 
@@ -321,16 +317,9 @@ module.exports = grammar({
             /[^\n]*/
         )),
 
-        // TODO for now this is a dirty workaround,
-        // as the parser already sees block comments anywhere
-        // in the file (see 'extras' above)
-        //
-        // a proper solution would be an external scanner to
-        // detect nested block comments
         block_comment: $ => seq(
             '(*',
             repeat(choice(
-                // $.block_comment,
                 /./
             )),
             '*)'
